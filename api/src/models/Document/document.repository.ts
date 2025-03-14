@@ -28,6 +28,9 @@ export class DocumentRepository {
       where: {
         user_id: userId,
       },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
 
     return documents;
