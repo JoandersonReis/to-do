@@ -22,14 +22,14 @@ export class UserService {
   async login(data: TUserData) {
     let user = await this.repository.single(data);
 
-    if (user) return user;
-
-    user = await this.repository.create(data);
+    if (!user) {
+      user = await this.repository.create(data);
+    }
 
     const token = JWT.generateToken(ENV.jwtSecret, user.id, {
       username: user.username,
     });
 
-    return token;
+    return { token };
   }
 }

@@ -28,7 +28,7 @@ export class UserController {
       Validation.validate(request, createUserSchema);
       const data = request.body;
 
-      const result = await this.service.create(data);
+      const result = await this.service.login(data);
 
       return response.status(201).json(result);
     } catch (err) {
