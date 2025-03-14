@@ -4,11 +4,18 @@ import { ReactNode } from "react"
 type TModalProps = {
   button: ReactNode
   children: ReactNode
+  isModalOpen: boolean
+  onModalOpen: (value: boolean) => void
 }
 
-export default function Modal({ button, children }: TModalProps) {
+export default function Modal({
+  button,
+  children,
+  onModalOpen,
+  isModalOpen,
+}: TModalProps) {
   return (
-    <Dialog.Root>
+    <Dialog.Root open={isModalOpen} onOpenChange={onModalOpen}>
       <Dialog.Trigger asChild>{button}</Dialog.Trigger>
 
       <Dialog.Portal>

@@ -1,28 +1,13 @@
 "use client"
 
+import { DocumentContext } from "@/contexts/DocumentProvider"
 import { MenuIcon } from "lucide-react"
-import { useState } from "react"
+import { useContext } from "react"
 import NewDocumentModal from "./NewDocumentModal"
 import { SideBar } from "./SideBar"
 
 export default function Menu() {
-  const [documents, setDocuments] = useState([
-    {
-      id: 1,
-      title: "faculdade",
-      created_at: new Date(),
-    },
-    {
-      id: "2",
-      title: "programação",
-      created_at: new Date(),
-    },
-    {
-      id: "3",
-      title: "tarefas",
-      created_at: new Date(),
-    },
-  ])
+  const { documents } = useContext(DocumentContext)
 
   return (
     <SideBar.Root>
@@ -39,13 +24,14 @@ export default function Menu() {
           Documentos
         </h2>
         <SideBar.Navigation>
-          {documents.map((document) => (
-            <SideBar.Item key={document.id}>
-              <SideBar.Link href={`document/${document.id}`}>
-                {document.title}
-              </SideBar.Link>
-            </SideBar.Item>
-          ))}
+          {documents &&
+            documents.map((document) => (
+              <SideBar.Item key={document.id}>
+                <SideBar.Link href={`document/${document.id}`}>
+                  {document.title}
+                </SideBar.Link>
+              </SideBar.Item>
+            ))}
         </SideBar.Navigation>
       </SideBar.Container>
     </SideBar.Root>
