@@ -22,6 +22,7 @@ export class UserController {
     }
   }
 
+  @Post('/users/login')
   async login(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createUserSchema);
