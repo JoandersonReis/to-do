@@ -24,7 +24,7 @@ export class TaskController {
     }
   }
 
-  @Put()
+  @Put(':id')
   async update(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');

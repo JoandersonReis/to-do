@@ -18,4 +18,5 @@ export const createSchema = z.object({
     .string()
     .min(2, 'Campo Obrigatório!')
     .uuid('Formato do Id inválido! Precisa ser UUID'),
+  done: z.boolean().optional(),
 });

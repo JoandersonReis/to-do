@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { errorResponse } from 'src/utils/errorResponse';
 import { TWhereIds } from '../types';
 import { DocumentRepository } from './document.repository';
 import { TDocumentCreate } from './types';
@@ -9,11 +8,7 @@ export class DocumentService {
   constructor(private repository: DocumentRepository) {}
 
   async single(ids: TWhereIds) {
-    const document = await this.repository.single(ids, true);
-
-    if (!document) {
-      throw errorResponse('Documento não existe!', 404);
-    }
+    const document = await this.repository.single(ids, true, true);
 
     return document;
   }
@@ -31,11 +26,7 @@ export class DocumentService {
   }
 
   async update(data: TDocumentCreate, ids: TWhereIds) {
-    const documentExists = await this.repository.single(ids);
-
-    if (!documentExists) {
-      throw errorResponse('Documento não existe!', 404);
-    }
+    await this.repository.single(ids, false, true);
 
     const documentUpdated = await this.repository.update(data, ids);
 
@@ -43,11 +34,7 @@ export class DocumentService {
   }
 
   async delete(ids: TWhereIds) {
-    const documentExists = await this.repository.single(ids);
-
-    if (!documentExists) {
-      throw errorResponse('Documento não existe!', 404);
-    }
+    await this.repository.single(ids, false, true);
 
     const documentDeleted = await this.repository.delete(ids);
 

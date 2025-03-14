@@ -1,15 +1,24 @@
 import { prisma } from 'prisma/prisma';
+import { errorResponse } from 'src/utils/errorResponse';
 import { TWhereIds } from '../types';
 import { TDocumentCreate } from './types';
 
 export class DocumentRepository {
-  async single(where: TWhereIds, tasks: boolean = false) {
+  async single(
+    where: TWhereIds,
+    tasks: boolean = false,
+    verify: boolean = false,
+  ) {
     const document = await prisma.document.findUnique({
       where,
       include: {
         Task: tasks,
       },
     });
+
+    if (!document && verify) {
+      throw errorResponse('Documento não existe!', 404);
+    }
 
     return document;
   }
