@@ -44,7 +44,7 @@ export class TaskController {
     }
   }
 
-  @Delete()
+  @Delete(':id')
   async delete(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
