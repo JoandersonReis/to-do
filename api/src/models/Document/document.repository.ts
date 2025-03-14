@@ -1,8 +1,9 @@
 import { prisma } from 'prisma/prisma';
-import { TDocumentCreate, TDocumentWhereIds } from './types';
+import { TWhereIds } from '../types';
+import { TDocumentCreate } from './types';
 
 export class DocumentRepository {
-  async single(where: TDocumentWhereIds, tasks: boolean = false) {
+  async single(where: TWhereIds, tasks: boolean = false) {
     const document = await prisma.document.findUnique({
       where,
       include: {
@@ -31,7 +32,7 @@ export class DocumentRepository {
     return document;
   }
 
-  async update(data: TDocumentCreate, where: TDocumentWhereIds) {
+  async update(data: TDocumentCreate, where: TWhereIds) {
     const document = await prisma.document.update({
       where,
       data,
@@ -40,7 +41,7 @@ export class DocumentRepository {
     return document;
   }
 
-  async delete(where: TDocumentWhereIds) {
+  async delete(where: TWhereIds) {
     const document = await prisma.document.delete({
       where,
     });

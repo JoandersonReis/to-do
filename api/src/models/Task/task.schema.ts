@@ -11,8 +11,12 @@ export const paramSchema = z.object({
 export type TParamSchema = z.infer<typeof paramSchema>;
 
 export const createSchema = z.object({
-  title: z
+  name: z
     .string()
     .min(2, 'Campo precisa ter 2 ou mais caracteres!')
     .toLowerCase(),
+  document_id: z
+    .string()
+    .min(2, 'Campo Obrigatório!')
+    .regex(new RegExp(uuidRegex), 'Campo document_id inválido!'),
 });
