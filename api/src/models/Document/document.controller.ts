@@ -9,7 +9,7 @@ import { TDocumentCreate } from './types';
 export class DocumentController {
   constructor(private readonly service: DocumentService) {}
 
-  @Get('/document')
+  @Get('/document/:id')
   async single(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
@@ -53,7 +53,7 @@ export class DocumentController {
     }
   }
 
-  @Put('/documents')
+  @Put('/documents/:id')
   async update(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');
@@ -73,7 +73,7 @@ export class DocumentController {
     }
   }
 
-  @Put('/documents')
+  @Put('/documents/:id')
   async delete(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
