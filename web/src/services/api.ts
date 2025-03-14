@@ -2,7 +2,7 @@ import { Utils } from "@/lib/Utils"
 import axios from "axios"
 
 export const api = axios.create({
-  baseURL: "https://localhost:4000",
+  baseURL: "http://localhost:4000",
 })
 
 api.interceptors.request.use(async (request) => {

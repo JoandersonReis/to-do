@@ -8,7 +8,7 @@ export default function Button({ className, ...props }: TButton) {
     <button
       {...props}
       className={twMerge(
-        "flex items-center justify-center gap-3 text-white rounded-md px-3 bg-primary cursor-pointer opacity-80 hover:opacity-100 transition-all",
+        "flex items-center justify-center gap-3 text-white rounded-md px-3 bg-primary cursor-pointer opacity-80 hover:opacity-100 transition-all h-10 disabled:bg-zinc-400 disabled:opacity-100 disabled:cursor-auto",
         className
       )}
     />

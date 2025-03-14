@@ -3,7 +3,7 @@ import { api } from "./api"
 import { TUserLoginResponse } from "./types"
 
 export class UserService {
-  async login(username: string) {
+  static async login(username: string) {
     const { data } = await api.post<TUserLoginResponse>("/users/login", {
       username,
     })

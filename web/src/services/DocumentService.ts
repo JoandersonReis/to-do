@@ -2,7 +2,7 @@ import { api } from "./api"
 import { TDocumentCreate, TDocumentResponse, TDocumentWithTasks } from "./types"
 
 export class DocumentService {
-  async create(
+  static async create(
     documentData: TDocumentCreate
   ): Promise<TDocumentResponse | null> {
     const { data } = await api.post("/documents", documentData)
@@ -16,7 +16,7 @@ export class DocumentService {
     return data
   }
 
-  async single(document_id: string): Promise<TDocumentWithTasks | null> {
+  static async single(document_id: string): Promise<TDocumentWithTasks | null> {
     const { data } = await api.get<TDocumentWithTasks>("/documents", {
       params: {
         id: document_id,
@@ -32,13 +32,13 @@ export class DocumentService {
     return data
   }
 
-  async show() {
+  static async show() {
     const { data } = await api.get<TDocumentResponse[]>("/documents")
 
     return data
   }
 
-  async update(
+  static async update(
     documentData: TDocumentCreate
   ): Promise<TDocumentResponse | null> {
     const { data } = await api.put("/documents", documentData)
@@ -52,7 +52,7 @@ export class DocumentService {
     return data
   }
 
-  async delete(document_id: string): Promise<TDocumentResponse | null> {
+  static async delete(document_id: string): Promise<TDocumentResponse | null> {
     const { data } = await api.delete<TDocumentResponse>("/documents", {
       params: {
         id: document_id,
