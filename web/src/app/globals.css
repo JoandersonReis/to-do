@@ -4,6 +4,8 @@
   --background: #0d1117;
   --primary: #204b57;
   --secondary: #151b23;
+
+  /* spin 1s linear infinite */
 }
 
 @theme inline {
@@ -12,6 +14,14 @@
   --color-secondary: var(--secondary);
   --font-sans: var(--font-poppins-sans);
   --font-mono: var(--font-geist-mono);
+
+  --animate-expand: expand 0.3s ease-in-out forwards;
+
+  @keyframes expand {
+    to {
+      width: 100%;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {

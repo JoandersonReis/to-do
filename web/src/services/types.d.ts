@@ -19,7 +19,7 @@ export type TDocumentResponse = TErrorResponse & {
 }
 
 export type TDocumentWithTasks = TDocumentResponse & {
-  Task: TTasks
+  Task: TTasks[]
 }
 
 export type TTasks = {

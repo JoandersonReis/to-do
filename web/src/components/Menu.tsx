@@ -27,7 +27,7 @@ export default function Menu() {
           {documents &&
             documents.map((document) => (
               <SideBar.Item key={document.id}>
-                <SideBar.Link href={`document/${document.id}`}>
+                <SideBar.Link href={`/painel/${document.id}`}>
                   {document.title}
                 </SideBar.Link>
               </SideBar.Item>

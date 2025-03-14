@@ -17,11 +17,9 @@ export class DocumentService {
   }
 
   static async single(document_id: string): Promise<TDocumentWithTasks | null> {
-    const { data } = await api.get<TDocumentWithTasks>("/documents", {
-      params: {
-        id: document_id,
-      },
-    })
+    const { data } = await api.get<TDocumentWithTasks>(
+      `/documents/${document_id}`
+    )
 
     if (data.status) {
       alert(data.description)
@@ -53,11 +51,9 @@ export class DocumentService {
   }
 
   static async delete(document_id: string): Promise<TDocumentResponse | null> {
-    const { data } = await api.delete<TDocumentResponse>("/documents", {
-      params: {
-        id: document_id,
-      },
-    })
+    const { data } = await api.delete<TDocumentResponse>(
+      `/documents/${document_id}`
+    )
 
     if (data.status) {
       alert(data.description)
