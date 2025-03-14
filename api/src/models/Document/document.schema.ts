@@ -1,11 +1,10 @@
-import { uuidRegex } from 'src/utils/config';
 import { z } from 'zod';
 
 export const paramSchema = z.object({
   id: z
     .string()
     .min(2, 'Campo Obrigatório!')
-    .regex(new RegExp(uuidRegex), 'Id inválido!'),
+    .uuid('Formato do Id inválido! Precisa ser UUID'),
 });
 
 export type TParamSchema = z.infer<typeof paramSchema>;

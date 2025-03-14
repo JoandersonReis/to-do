@@ -1,15 +1,15 @@
-import { Controller, Get, Post, Put, Req, Res } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Validation } from 'src/utils/Validation';
 import { createSchema, paramSchema, TParamSchema } from './document.schema';
 import { DocumentService } from './document.service';
 import { TDocumentCreate } from './types';
 
-@Controller()
+@Controller('documents')
 export class DocumentController {
   constructor(private readonly service: DocumentService) {}
 
-  @Get('/document/:id')
+  @Get(':id')
   async single(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
@@ -23,22 +23,22 @@ export class DocumentController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Get('/documents')
+  @Get()
   async show(@Req() request: Request, @Res() response: Response) {
     try {
       const result = await this.service.show(request.user_id);
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Post('/documents')
+  @Post()
   async create(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');
@@ -49,11 +49,11 @@ export class DocumentController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Put('/documents/:id')
+  @Put(':id')
   async update(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');
@@ -69,11 +69,11 @@ export class DocumentController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Put('/documents/:id')
+  @Delete(':id')
   async delete(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
@@ -87,7 +87,7 @@ export class DocumentController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 }

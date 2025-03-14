@@ -4,11 +4,11 @@ import { Validation } from 'src/utils/Validation';
 import { createUserSchema } from './user.schema';
 import { UserService } from './user.service';
 
-@Controller()
+@Controller('users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
-  @Post('/users')
+  @Post()
   async create(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createUserSchema);
@@ -22,7 +22,7 @@ export class UserController {
     }
   }
 
-  @Post('/users/login')
+  @Post('login')
   async login(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createUserSchema);

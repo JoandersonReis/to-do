@@ -1,15 +1,15 @@
-import { Controller, Post, Put, Req, Res } from '@nestjs/common';
+import { Controller, Delete, Post, Put, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Validation } from 'src/utils/Validation';
 import { createSchema, paramSchema, TParamSchema } from './task.schema';
 import { TaskService } from './task.service';
 import { TTaskCreate } from './types';
 
-@Controller()
+@Controller('tasks')
 export class TaskController {
   constructor(private readonly service: TaskService) {}
 
-  @Post('/tasks')
+  @Post()
   async create(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');
@@ -20,11 +20,11 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Put('/tasks')
+  @Put()
   async update(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, createSchema, 'body');
@@ -40,11 +40,11 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 
-  @Put('/tasks')
+  @Delete()
   async delete(@Req() request: Request, @Res() response: Response) {
     try {
       Validation.validate(request, paramSchema, 'params');
@@ -58,7 +58,7 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json();
+      return response.status(err.status).json(err);
     }
   }
 }
