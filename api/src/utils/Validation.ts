@@ -7,7 +7,7 @@ export class Validation {
   static validate(
     request: Request,
     schema: AnyZodObject,
-    type: TSchemaType = 'BODY',
+    type: TSchemaType = 'body',
   ) {
     try {
       request[type] = schema.parse(request[type]);

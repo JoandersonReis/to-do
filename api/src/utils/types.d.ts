@@ -4,4 +4,4 @@ export type TErrorResponse = {
   errors?: object;
 };
 
-export type TSchemaType = 'BODY' | 'PARAM' | 'QUERY';
+export type TSchemaType = 'body' | 'params' | 'queries';
