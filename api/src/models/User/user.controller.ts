@@ -21,4 +21,17 @@ export class UserController {
       return response.status(err.status).json(err);
     }
   }
+
+  async login(@Req() request: Request, @Res() response: Response) {
+    try {
+      Validation.validate(request, createUserSchema);
+      const data = request.body;
+
+      const result = await this.service.create(data);
+
+      return response.status(201).json(result);
+    } catch (err) {
+      return response.status(err.status).json(err);
+    }
+  }
 }
