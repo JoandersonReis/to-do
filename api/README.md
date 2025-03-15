@@ -2,7 +2,7 @@
 
 ## Via docker
 
-´docker-compose up -d --build´
+`docker-compose up -d --build`
 
 ## Caso não rode via docker
 
