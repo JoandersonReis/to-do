@@ -7,13 +7,5 @@ type TSideBarLink = AnchorHTMLAttributes<HTMLAnchorElement> & {
 }
 
 export default function SideBarLink({ className, ...props }: TSideBarLink) {
-  return (
-    <Link
-      {...props}
-      className={twMerge(
-        "uppercase h-10 flex items-center justify-center px-4 bg-background opacity-70 hover:opacity-100 transition-all rounded-md",
-        className
-      )}
-    />
-  )
+  return <Link {...props} className={twMerge("uppercase flex-1", className)} />
 }

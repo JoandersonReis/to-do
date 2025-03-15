@@ -3,8 +3,9 @@
 import Button from "@/components/Button"
 import { Form } from "@/components/Form"
 import TaskItem from "@/components/TaskItem"
+import UpdateDocumentModal from "@/components/UpdateDocumentModal"
 import useTasks from "@/hooks/useTasks"
-import { Edit2, Plus, X } from "lucide-react"
+import { Plus, X } from "lucide-react"
 
 export default function Tasks() {
   const {
@@ -15,6 +16,7 @@ export default function Tasks() {
     onSubmit,
     setNewTask,
     onDelete,
+    onDocument,
   } = useTasks()
 
   return (
@@ -23,9 +25,7 @@ export default function Tasks() {
         <h1 className="text-white text-4xl uppercase underline flex items-center gap-2">
           {document && document.title}
 
-          <Button className="p-0 w-8 h-8 opacity-30">
-            <Edit2 size={12} />
-          </Button>
+          <UpdateDocumentModal document={document} onDocument={onDocument} />
         </h1>
 
         <div>
@@ -38,9 +38,12 @@ export default function Tasks() {
                   key={task.id}
                 >
                   <Form.Input
+                    className="outline-0 border-0"
                     name="name"
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
+                    autoFocus
+                    onBlur={() => onDelete(task.id, true)}
                   />
                 </Form.Root>
               ) : (

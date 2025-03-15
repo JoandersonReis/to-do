@@ -24,6 +24,12 @@ export default function useTasks() {
   }
 
   const handleNewTask = async (position: number) => {
+    if (newTask.length === 0) {
+      onDelete("0", true)
+
+      return
+    }
+
     const result = await TaskService.create({
       name: newTask,
       document_id: document?.id || "",
@@ -60,10 +66,13 @@ export default function useTasks() {
     taskState.done(position)
   }
 
-  const onDelete = async (taskId: string) => {
-    await TaskService.delete(taskId)
+  const onDelete = async (taskId: string, onlyState?: boolean) => {
+    if (!onlyState) {
+      await TaskService.delete(taskId)
+    }
 
     taskState.delete(taskId)
+    setNewTask("")
   }
 
   useEffect(() => {
@@ -78,5 +87,6 @@ export default function useTasks() {
     onDone,
     addNewTask,
     onDelete,
+    onDocument: setDocument,
   }
 }

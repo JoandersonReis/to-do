@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog"
-import { ReactNode } from "react"
+import { ComponentProps, ReactNode } from "react"
 
-type TModalProps = {
+type TModalProps = ComponentProps<"button"> & {
   button: ReactNode
   children: ReactNode
   isModalOpen: boolean
@@ -13,6 +13,7 @@ export default function Modal({
   children,
   onModalOpen,
   isModalOpen,
+  ...props
 }: TModalProps) {
   return (
     <Dialog.Root open={isModalOpen} onOpenChange={onModalOpen}>

@@ -37,9 +37,10 @@ export class DocumentService {
   }
 
   static async update(
-    documentData: TDocumentCreate
+    documentData: TDocumentCreate,
+    document_id: string
   ): Promise<TDocumentResponse | null> {
-    const { data } = await api.put("/documents", documentData)
+    const { data } = await api.put(`/documents/${document_id}`, documentData)
 
     if (data.status) {
       alert(data.description)

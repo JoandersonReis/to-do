@@ -1,13 +1,28 @@
 "use client"
 
 import { DocumentContext } from "@/contexts/DocumentProvider"
-import { MenuIcon } from "lucide-react"
+import { BaseState } from "@/lib/states/Base"
+import { DocumentService } from "@/services/DocumentService"
+import { TDocumentResponse } from "@/services/types"
+import { MenuIcon, Trash } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useContext } from "react"
+import Action from "./ActionPopover"
 import NewDocumentModal from "./NewDocumentModal"
 import { SideBar } from "./SideBar"
 
 export default function Menu() {
-  const { documents } = useContext(DocumentContext)
+  const { documents, onDocuments } = useContext(DocumentContext)
+  const baseState = new BaseState<TDocumentResponse>(onDocuments, documents)
+  const router = useRouter()
+
+  const onDelete = async (document_id: string) => {
+    await DocumentService.delete(document_id)
+
+    baseState.delete(document_id)
+
+    router.push("/painel")
+  }
 
   return (
     <SideBar.Root>
@@ -30,6 +45,13 @@ export default function Menu() {
                 <SideBar.Link href={`/painel/${document.id}`}>
                   {document.title}
                 </SideBar.Link>
+
+                <Action
+                  onConfirm={() => onDelete(document.id)}
+                  className="bg-red-500"
+                >
+                  <Trash size={12} color="#fff" />
+                </Action>
               </SideBar.Item>
             ))}
         </SideBar.Navigation>
