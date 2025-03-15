@@ -15,7 +15,7 @@
   --font-sans: var(--font-poppins-sans);
   --font-mono: var(--font-geist-mono);
 
-  --animate-expand: expand 0.3s ease-in-out forwards;
+  --animate-expand: expand 0.2s ease-in-out forwards;
 
   @keyframes expand {
     to {

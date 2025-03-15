@@ -30,11 +30,7 @@ export class TaskService {
   }
 
   static async delete(task_id: string): Promise<TTaskResponse | null> {
-    const { data } = await api.delete<TTaskResponse>("/tasks", {
-      params: {
-        id: task_id,
-      },
-    })
+    const { data } = await api.delete<TTaskResponse>(`/tasks/${task_id}`)
 
     if (data.status) {
       alert(data.description)

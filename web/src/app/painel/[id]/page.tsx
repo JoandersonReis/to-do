@@ -3,99 +3,19 @@
 import Button from "@/components/Button"
 import { Form } from "@/components/Form"
 import TaskItem from "@/components/TaskItem"
-import { DocumentService } from "@/services/DocumentService"
-import { TaskService } from "@/services/TaskService"
-import { TDocumentWithTasks, TTask } from "@/services/types"
-import { Edit2, Plus } from "lucide-react"
-import { useParams } from "next/navigation"
-import { FormEvent, useEffect, useState } from "react"
+import useTasks from "@/hooks/useTasks"
+import { Edit2, Plus, X } from "lucide-react"
 
-export default function Page() {
-  const params = useParams()
-  const [document, setDocument] = useState<TDocumentWithTasks | null>()
-  const [newTask, setNewTask] = useState("")
-
-  const loadDocument = async () => {
-    const result = await DocumentService.single(String(params.id))
-
-    setDocument(result)
-  }
-
-  const addNewTask = () => {
-    if (document) {
-      setDocument({
-        ...document,
-        Task: [
-          ...document.Task,
-          {
-            id: "0",
-            created_at: String(new Date()),
-            name: newTask,
-            done: false,
-          },
-        ],
-      })
-    }
-  }
-
-  const handleNewTask = async (position: number) => {
-    const result = await TaskService.create({
-      name: newTask,
-      document_id: document?.id || "",
-    })
-
-    if (document && result) {
-      const tasksUpdated = document.Task.map((task, index) => {
-        if (index === position) {
-          return {
-            id: result.id,
-            name: result.name,
-            done: result.done,
-            created_at: result.created_at,
-          }
-        }
-
-        return task
-      })
-
-      setDocument({ ...document, Task: tasksUpdated })
-    }
-
-    setNewTask("")
-  }
-
-  const onSubmit = (e: FormEvent, position: number) => {
-    e.preventDefault()
-
-    handleNewTask(position)
-  }
-
-  const onDone = async (position: number, task: TTask) => {
-    if (document) {
-      await TaskService.update(
-        {
-          document_id: document?.id || "",
-          name: task.name,
-          done: !task.done,
-        },
-        task.id
-      )
-
-      const tasksUpdate = document.Task.map((task, index) => {
-        if (position === index) {
-          return { ...task, done: !task.done }
-        }
-
-        return task
-      })
-
-      setDocument({ ...document, Task: tasksUpdate })
-    }
-  }
-
-  useEffect(() => {
-    loadDocument()
-  }, [])
+export default function Tasks() {
+  const {
+    addNewTask,
+    document,
+    newTask,
+    onDone,
+    onSubmit,
+    setNewTask,
+    onDelete,
+  } = useTasks()
 
   return (
     <div className="h-full flex flex-col items-center">
@@ -129,14 +49,23 @@ export default function Page() {
                     {task.name}
                   </TaskItem>
 
-                  {index === document.Task.length - 1 && (
+                  <div className="flex items-center gap-1">
+                    {index === document.Task.length - 1 && (
+                      <Button
+                        onClick={addNewTask}
+                        className="p-0 h-4 w-4 bg-primary"
+                      >
+                        <Plus size={12} />
+                      </Button>
+                    )}
+
                     <Button
-                      onClick={() => addNewTask()}
-                      className="p-0 h-6 w-6 bg-primary"
+                      onClick={() => onDelete(task.id)}
+                      className="p-0 h-4 w-4 bg-red-500 md:opacity-0 md:group-hover:opacity-100"
                     >
-                      <Plus size={12} />
+                      <X size={12} />
                     </Button>
-                  )}
+                  </div>
                 </div>
               )
             )
