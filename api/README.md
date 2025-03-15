@@ -14,4 +14,4 @@
 
 ## Como rodar
 
-´yarn dev ou npm run dev´
+`yarn dev ou npm run dev`
