@@ -32,6 +32,7 @@ export type TTask = {
 export type TTaskCreate = {
   name: string
   document_id: string
+  done?: boolean
 }
 
 export type TTaskResponse = TErrorResponse & {

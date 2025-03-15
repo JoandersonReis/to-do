@@ -14,8 +14,11 @@ export class TaskService {
     return data
   }
 
-  static async update(taskData: TTaskCreate): Promise<TTaskResponse | null> {
-    const { data } = await api.put("/tasks", taskData)
+  static async update(
+    taskData: TTaskCreate,
+    id: string
+  ): Promise<TTaskResponse | null> {
+    const { data } = await api.put(`/tasks/${id}`, taskData)
 
     if (data.status) {
       alert(data.description)

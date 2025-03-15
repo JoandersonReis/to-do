@@ -1,12 +1,17 @@
 import { ComponentProps } from "react"
 import { Task } from "./Task"
 
-type TTaskItem = ComponentProps<"div">
+type TTaskItem = ComponentProps<"div"> & {
+  onDone?: VoidFunction
+  done: boolean
+}
 
-export default function TaskItem({ children }: TTaskItem) {
+export default function TaskItem({ children, onDone, done }: TTaskItem) {
   return (
     <Task.Root>
-      <Task.Checkout>{children}</Task.Checkout>
+      <Task.Checkout onClick={onDone} done={done}>
+        {children}
+      </Task.Checkout>
     </Task.Root>
   )
 }

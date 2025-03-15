@@ -5,7 +5,7 @@ import { Form } from "@/components/Form"
 import TaskItem from "@/components/TaskItem"
 import { DocumentService } from "@/services/DocumentService"
 import { TaskService } from "@/services/TaskService"
-import { TDocumentWithTasks } from "@/services/types"
+import { TDocumentWithTasks, TTask } from "@/services/types"
 import { Edit2, Plus } from "lucide-react"
 import { useParams } from "next/navigation"
 import { FormEvent, useEffect, useState } from "react"
@@ -45,14 +45,18 @@ export default function Page() {
     })
 
     if (document && result) {
-      let tasksUpdated = document.Task
+      const tasksUpdated = document.Task.map((task, index) => {
+        if (index === position) {
+          return {
+            id: result.id,
+            name: result.name,
+            done: result.done,
+            created_at: result.created_at,
+          }
+        }
 
-      tasksUpdated[position] = {
-        id: result.id,
-        name: result.name,
-        done: result.done,
-        created_at: result.created_at,
-      }
+        return task
+      })
 
       setDocument({ ...document, Task: tasksUpdated })
     }
@@ -64,6 +68,29 @@ export default function Page() {
     e.preventDefault()
 
     handleNewTask(position)
+  }
+
+  const onDone = async (position: number, task: TTask) => {
+    if (document) {
+      await TaskService.update(
+        {
+          document_id: document?.id || "",
+          name: task.name,
+          done: !task.done,
+        },
+        task.id
+      )
+
+      const tasksUpdate = document.Task.map((task, index) => {
+        if (position === index) {
+          return { ...task, done: !task.done }
+        }
+
+        return task
+      })
+
+      setDocument({ ...document, Task: tasksUpdate })
+    }
   }
 
   useEffect(() => {
@@ -88,9 +115,9 @@ export default function Page() {
                 <Form.Root
                   onSubmit={(e) => onSubmit(e, index)}
                   className="my-2"
+                  key={task.id}
                 >
                   <Form.Input
-                    key={task.id}
                     name="name"
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
@@ -98,7 +125,9 @@ export default function Page() {
                 </Form.Root>
               ) : (
                 <div className="flex gap-2 items-center group" key={task.id}>
-                  <TaskItem>{task.name}</TaskItem>
+                  <TaskItem onDone={() => onDone(index, task)} done={task.done}>
+                    {task.name}
+                  </TaskItem>
 
                   {index === document.Task.length - 1 && (
                     <Button
@@ -115,7 +144,7 @@ export default function Page() {
             <div className="flex flex-col gap-2">
               <h2 className="text-zinc-500">Nenhuma tarefa adicionada</h2>
 
-              <Button onClick={() => addNewTask(0)}>Nova Tarefa</Button>
+              <Button onClick={() => addNewTask()}>Nova Tarefa</Button>
             </div>
           )}
         </div>
