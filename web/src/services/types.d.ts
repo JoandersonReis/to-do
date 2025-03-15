@@ -19,10 +19,10 @@ export type TDocumentResponse = TErrorResponse & {
 }
 
 export type TDocumentWithTasks = TDocumentResponse & {
-  Task: TTasks[]
+  Task: TTask[]
 }
 
-export type TTasks = {
+export type TTask = {
   id: string
   name: string
   done: boolean
@@ -31,6 +31,8 @@ export type TTasks = {
 
 export type TTaskCreate = {
   name: string
+  document_id: string
+  position: number
 }
 
 export type TTaskResponse = TErrorResponse & {

@@ -12,4 +12,22 @@ export class Utils {
 
     return JSON.parse(String(user))
   }
+
+  public static addObjectInArrayPosition<T>(
+    array: T[],
+    position: number,
+    item: T
+  ): T[] {
+    const start = array.slice(0, position + 1)
+    const end = array.slice(position + 1, array.length)
+
+    console.log(start)
+    console.log(end)
+
+    if (position >= array.length - 1) {
+      return [...array, item]
+    }
+
+    return [...start, item, ...end]
+  }
 }

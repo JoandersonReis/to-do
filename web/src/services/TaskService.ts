@@ -1,11 +1,11 @@
 import { api } from "./api"
 import { TTaskCreate, TTaskResponse } from "./types"
 
-export class DocumentService {
+export class TaskService {
   static async create(taskData: TTaskCreate): Promise<TTaskResponse | null> {
-    const { data } = await api.post("/tasks", taskData)
+    const { data, status } = await api.post("/tasks", taskData)
 
-    if (data.status) {
+    if (data.status && status > 200) {
       alert(data.description)
 
       return null
