@@ -1,4 +1,4 @@
-# Seguir os prossedimentos abaixo para rodar o projeto
+# Seguir os procedimentos abaixo para rodar o projeto
 
 ## Via docker
 
