@@ -1,7 +1,7 @@
 "use client"
 
 import Button from "@/components/Button"
-import { Form } from "@/components/Form"
+import NewTaskForm from "@/components/NewTaskForm"
 import { Task } from "@/components/Task"
 import TaskItem from "@/components/TaskItem"
 import UpdateDocumentModal from "@/components/UpdateDocumentModal"
@@ -33,20 +33,14 @@ export default function Tasks() {
           {document && document?.Task.length > 0 ? (
             document.Task.map((task, index) =>
               task.id === "0" ? (
-                <Form.Root
-                  onSubmit={(e) => onSubmit(e, index)}
-                  className="my-2"
+                <NewTaskForm
                   key={task.id}
-                >
-                  <Form.Input
-                    className="outline-0 border-0"
-                    name="name"
-                    value={newTask}
-                    onChange={(e) => setNewTask(e.target.value)}
-                    autoFocus
-                    onBlur={() => onDelete(task.id, true)}
-                  />
-                </Form.Root>
+                  onSubmit={(e) => onSubmit(e, index)}
+                  taskId={task.id}
+                  onDelete={onDelete}
+                  newTaskName={newTask}
+                  setNewTaskName={setNewTask}
+                />
               ) : (
                 <div className="flex gap-2 items-center group" key={task.id}>
                   <TaskItem onDone={() => onDone(index, task)} done={task.done}>
