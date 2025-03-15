@@ -3,10 +3,9 @@
 import Button from "@/components/Button"
 import { Form } from "@/components/Form"
 import TaskItem from "@/components/TaskItem"
-import { Utils } from "@/lib/Utils"
 import { DocumentService } from "@/services/DocumentService"
 import { TaskService } from "@/services/TaskService"
-import { TDocumentWithTasks, TTask } from "@/services/types"
+import { TDocumentWithTasks } from "@/services/types"
 import { Edit2, Plus } from "lucide-react"
 import { useParams } from "next/navigation"
 import { FormEvent, useEffect, useState } from "react"
@@ -22,21 +21,20 @@ export default function Page() {
     setDocument(result)
   }
 
-  const addNewTask = (position: number) => {
-    const tasks = document?.Task || []
-    const tasksUpdated = Utils.addObjectInArrayPosition<TTask>(
-      tasks,
-      position,
-      {
-        created_at: String(new Date()),
-        done: false,
-        name: "",
-        id: "0",
-      }
-    )
-
+  const addNewTask = () => {
     if (document) {
-      setDocument({ ...document, Task: tasksUpdated })
+      setDocument({
+        ...document,
+        Task: [
+          ...document.Task,
+          {
+            id: "0",
+            created_at: String(new Date()),
+            name: newTask,
+            done: false,
+          },
+        ],
+      })
     }
   }
 
@@ -44,17 +42,19 @@ export default function Page() {
     const result = await TaskService.create({
       name: newTask,
       document_id: document?.id || "",
-      position,
     })
 
     if (document && result) {
       let tasksUpdated = document.Task
+
       tasksUpdated[position] = {
-        created_at: result.created_at,
-        done: result.done,
         id: result.id,
         name: result.name,
+        done: result.done,
+        created_at: result.created_at,
       }
+
+      setDocument({ ...document, Task: tasksUpdated })
     }
 
     setNewTask("")
@@ -99,12 +99,15 @@ export default function Page() {
               ) : (
                 <div className="flex gap-2 items-center group" key={task.id}>
                   <TaskItem>{task.name}</TaskItem>
-                  <Button
-                    onClick={() => addNewTask(index)}
-                    className="p-0 h-6 w-6 bg-primary"
-                  >
-                    <Plus size={12} />
-                  </Button>
+
+                  {index === document.Task.length - 1 && (
+                    <Button
+                      onClick={() => addNewTask()}
+                      className="p-0 h-6 w-6 bg-primary"
+                    >
+                      <Plus size={12} />
+                    </Button>
+                  )}
                 </div>
               )
             )

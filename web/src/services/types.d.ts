@@ -32,7 +32,6 @@ export type TTask = {
 export type TTaskCreate = {
   name: string
   document_id: string
-  position: number
 }
 
 export type TTaskResponse = TErrorResponse & {
