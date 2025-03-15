@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button"
 import { Form } from "@/components/Form"
+import { Task } from "@/components/Task"
 import TaskItem from "@/components/TaskItem"
 import UpdateDocumentModal from "@/components/UpdateDocumentModal"
 import useTasks from "@/hooks/useTasks"
@@ -54,20 +55,17 @@ export default function Tasks() {
 
                   <div className="flex items-center gap-1">
                     {index === document.Task.length - 1 && (
-                      <Button
-                        onClick={addNewTask}
-                        className="p-0 h-4 w-4 bg-primary"
-                      >
+                      <Task.Action onClick={addNewTask} className="bg-primary">
                         <Plus size={12} />
-                      </Button>
+                      </Task.Action>
                     )}
 
-                    <Button
+                    <Task.Action
                       onClick={() => onDelete(task.id)}
-                      className="p-0 h-4 w-4 bg-red-500 md:opacity-0 md:group-hover:opacity-100"
+                      className="bg-red-500 md:opacity-0 md:group-hover:opacity-100"
                     >
                       <X size={12} />
-                    </Button>
+                    </Task.Action>
                   </div>
                 </div>
               )
@@ -76,7 +74,7 @@ export default function Tasks() {
             <div className="flex flex-col gap-2">
               <h2 className="text-zinc-500">Nenhuma tarefa adicionada</h2>
 
-              <Button onClick={() => addNewTask()}>Nova Tarefa</Button>
+              <Button onClick={addNewTask}>Nova Tarefa</Button>
             </div>
           )}
         </div>

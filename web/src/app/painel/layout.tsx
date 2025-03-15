@@ -13,7 +13,7 @@ export default function RootLayout({
         <>
           <Menu />
 
-          <main className="flex-1 overflow-y-scroll p-12 h-screen relative">
+          <main className="flex-1 overflow-y-scroll px-12 py-24 h-screen relative">
             <ExitAccount className="absolute top-4 right-4" />
             {children}
           </main>
