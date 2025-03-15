@@ -1,6 +1,12 @@
 # Seguir os prossedimentos abaixo para rodar o projeto
 
-# Comandos para configurar o projeto
+## Via docker
+
+´docker-compose up -d --build´
+
+## Caso não rode via docker
+
+### Comandos para configurar o projeto
 
 `yarn install ou npm install`
 

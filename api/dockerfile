@@ -1,0 +1,22 @@
+FROM node:23-alpine
+
+WORKDIR /app
+
+COPY package.json yarn.lock /app/
+
+RUN yarn cache clean \
+  rm node_modules/ \
+  yarn install --frozen-lockfile
+
+COPY prisma ./prisma/
+
+COPY . .
+
+ENV DATABASE_URL="file:./dev.db"
+ENV JWT_SECRET="alksdj89102ejmdmcv0912821"
+
+RUN npx prisma migrate dev --name init
+
+EXPOSE 4000
+
+CMD [ "yarn", "dev" ]

@@ -1,6 +1,6 @@
 export type TErrorResponse = {
-  description: string;
-  status: number;
+  statusCode: number;
+  message: string;
   errors?: object;
 };
 

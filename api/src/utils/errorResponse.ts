@@ -1,13 +1,13 @@
 import { TErrorResponse } from './types';
 
 export function errorResponse(
-  description: string,
-  status: number = 400,
+  message: string,
+  statusCode: number = 400,
   errors?: object,
 ): TErrorResponse {
   return {
-    description,
-    status,
+    statusCode,
+    message,
     errors,
   };
 }

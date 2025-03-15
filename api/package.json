@@ -23,7 +23,7 @@
     "prisma:migrate": "prisma migrate",
     "prisma:db:push": "prisma db push",
     "prisma:generate": "prisma generate",
-    "start:migrate": "npx prisma db push --force-reset && npm run start:dev"
+    "start:migrate": "yarn dev"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -20,7 +20,7 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json(err);
+      return response.status(err.statusCode).json(err);
     }
   }
 
@@ -40,7 +40,7 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json(err);
+      return response.status(err.statusCode).json(err);
     }
   }
 
@@ -58,7 +58,7 @@ export class TaskController {
 
       return response.json(result);
     } catch (err) {
-      return response.status(err.status).json(err);
+      return response.status(err.statusCode).json(err);
     }
   }
 }

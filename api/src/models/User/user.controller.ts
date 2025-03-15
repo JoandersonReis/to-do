@@ -18,7 +18,7 @@ export class UserController {
 
       return response.status(201).json(user);
     } catch (err) {
-      return response.status(err.status).json(err);
+      return response.status(err.statusCode).json(err);
     }
   }
 
@@ -32,7 +32,7 @@ export class UserController {
 
       return response.status(201).json(result);
     } catch (err) {
-      return response.status(err.status).json(err);
+      return response.status(err.statusCode).json(err);
     }
   }
 }
