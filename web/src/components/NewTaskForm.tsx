@@ -5,8 +5,7 @@ import { Form } from "./Form"
 type TNewTaskForm = ComponentProps<"form"> & {
   newTaskName: string
   setNewTaskName: (name: string) => void
-  onDelete: (taskId: string, onlyState: boolean) => void
-  taskId: string
+  onDelete: VoidFunction
 }
 
 export default function NewTaskForm({
@@ -14,7 +13,6 @@ export default function NewTaskForm({
   newTaskName,
   setNewTaskName,
   onDelete,
-  taskId,
   ...props
 }: TNewTaskForm) {
   return (
@@ -25,7 +23,7 @@ export default function NewTaskForm({
         value={newTaskName}
         onChange={(e) => setNewTaskName(e.target.value)}
         autoFocus
-        onBlur={() => onDelete(taskId, true)}
+        onBlur={onDelete}
       />
     </Form.Root>
   )

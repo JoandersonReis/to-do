@@ -1,10 +1,10 @@
 "use client"
 
 import Button from "@/components/Button"
+import EditDocumentForm from "@/components/EditDocumentForm"
 import NewTaskForm from "@/components/NewTaskForm"
 import { Task } from "@/components/Task"
 import TaskItem from "@/components/TaskItem"
-import UpdateDocumentModal from "@/components/UpdateDocumentModal"
 import useTasks from "@/hooks/useTasks"
 import { Plus, X } from "lucide-react"
 
@@ -23,11 +23,7 @@ export default function Tasks() {
   return (
     <div className="h-full flex flex-col items-center">
       <section className="flex flex-col gap-8 max-w-[600px] w-full">
-        <h1 className="text-white text-4xl uppercase underline flex items-center gap-2">
-          {document && document.title}
-
-          <UpdateDocumentModal document={document} onDocument={onDocument} />
-        </h1>
+        <EditDocumentForm document={document} onDocument={onDocument} />
 
         <div>
           {document && document?.Task.length > 0 ? (
@@ -36,8 +32,7 @@ export default function Tasks() {
                 <NewTaskForm
                   key={task.id}
                   onSubmit={(e) => onSubmit(e, index)}
-                  taskId={task.id}
-                  onDelete={onDelete}
+                  onDelete={() => onDelete(task.id, true)}
                   newTaskName={newTask}
                   setNewTaskName={setNewTask}
                 />

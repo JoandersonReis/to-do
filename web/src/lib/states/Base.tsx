@@ -23,4 +23,18 @@ export class BaseState<T> {
       this.onState(stateUpdated)
     }
   }
+
+  public update(id: string, key: string, value: string) {
+    if (this.state) {
+      const stateUpdated = this.state.map((item) => {
+        if (item.id === id) {
+          return { ...item, [key]: value }
+        }
+
+        return item
+      })
+
+      this.onState(stateUpdated)
+    }
+  }
 }
